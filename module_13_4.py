@@ -74,10 +74,10 @@ async def set_man(message, state):
     data = await state.get_data()
     if (data['man_']) == 'м':
         # Расчет по формуле Миффлина-Сан Жеора для мужчин
-        calories = int(int(data['weight_'])*10 + int(data['growth_']) * 6.25 - int(data['age_']) + 5)
+        calories = int(data['weight_'])*10 + int(data['growth_']) * 6.25 - int(data['age_']) + 5
     elif (data['man_']) == 'ж':
         # Расчет по формуле Миффлина-Сан Жеора для женщин
-        calories = int(int(data['weight_']) * 10 + int(data['growth_']) * 6.25 - int(data['age_']) - 161)
+        calories = int(data['weight_']) * 10 + int(data['growth_']) * 6.25 - int(data['age_']) - 161
     # ожидание вывода текста результатов расчета
     await message.answer(f'Ваша норма калорий {calories} день')
     # завершение работы машины состояния
