@@ -75,7 +75,7 @@ async def set_weight(message, state):
 @dp.message_handler(state=UserState.man)
 # функция расчета суточного рациона пользователя в калориях
 async def set_calories(message, state):
-    # ожидание сохранение сообщения веса от пользователя в базе данных состояния
+    # ожидание сохранение сообщения пола от пользователя в базе данных состояния
     await state.update_data(man_=message.text)
     # сохранение полученных данных в переменной data
     data = await state.get_data()
