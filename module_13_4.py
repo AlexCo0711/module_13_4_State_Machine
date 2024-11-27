@@ -21,6 +21,7 @@ class UserState(StatesGroup):
     age = State()
     growth = State()
     weight = State()
+    man = State()
 
 # обработчик ожидания сообщения от пользователя на слово Calories
 @dp.message_handler(text = 'Calories')
@@ -59,10 +60,24 @@ async def set_weight(message, state):
 async def set_weight(message, state):
     # ожидание сохранение сообщения веса от пользователя в базе данных состояния
     await state.update_data(weight_=message.text)
+    # ожидание вывода текста
+    await message.answer('Введите свой пол (м / ж):')
+    # ожидание ввода пола
+    await UserState.man.set()
+
+# обработчик ожидания окончания статуса UserState.weight
+@dp.message_handler(state = UserState.man)
+async def set_man(message, state):
+    # ожидание сохранение сообщения веса от пользователя в базе данных состояния
+    await state.update_data(man_=message.text)
     # сохранение полученных данных в переменной data
     data = await state.get_data()
-    # Расчет по формуле Миффлина-Сан Жеора для мужчин
-    calories = int(int(data['weight_'])*10 + int(data['growth_']) * 6.25 - int(data['age_']) + 5)
+    if (data['man_']) == 'м':
+        # Расчет по формуле Миффлина-Сан Жеора для мужчин
+        calories = int(int(data['weight_'])*10 + int(data['growth_']) * 6.25 - int(data['age_']) + 5)
+    elif (data['man_']) == 'ж':
+        # Расчет по формуле Миффлина-Сан Жеора для женщин
+        calories = int(int(data['weight_']) * 10 + int(data['growth_']) * 6.25 - int(data['age_']) - 161)
     # ожидание вывода текста результатов расчета
     await message.answer(f'Ваша норма калорий {calories} день')
     # завершение работы машины состояния
