@@ -18,7 +18,7 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 
 # объявление класса состояния UserState наследованный от StatesGroup
 class UserState(StatesGroup):
-    # объявление объектов класса age, growth, weight (возраст, рост, вес)
+    # объявление объектов класса age, growth, weight, man (возраст, рост, вес, пол)
     age = State()
     growth = State()
     weight = State()
