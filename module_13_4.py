@@ -96,12 +96,17 @@ async def set_calories(message, state):
     await state.finish()
 
 
-# обработчик реагирующий на любые сообщения
-@dp.message_handler()
+@dp.message_handler(commands=['start'])
 async def start(message):
-    await message.answer('Привет! Я бот помогающий твоему здоровью.\n'
-                         'Введите слово "Calories"')
+    await message.answer(
+        'Привет! Я бот помогающий вашему здоровью.'
+        ' Введите слово Calories, чтобы узнать вашу суточную норму'
+        ' потребления калорий')
 
+
+@dp.message_handler()
+async def all_messages(message):
+    await message.answer('Введите команду /start, чтобы начать общение.')
 
 if __name__ == '__main__':
     # запуск бота (dp - аргумент через что стартовать)
