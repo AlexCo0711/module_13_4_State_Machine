@@ -71,7 +71,7 @@ async def set_weight(message, state):
     await UserState.man.set()
 
 
-# обработчик ожидания окончания статуса UserState.weight
+# обработчик ожидания окончания статуса UserState.man
 @dp.message_handler(state=UserState.man)
 async def set_man(message, state):
     # ожидание сохранение сообщения веса от пользователя в базе данных состояния
