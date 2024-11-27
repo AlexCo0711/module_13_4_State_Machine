@@ -97,8 +97,3 @@ async def start(message):
 if __name__ == '__main__':
     # запуск бота (dp - аргумент через что стартовать)
     executor.start_polling(dp, skip_updates=True)
-
-
-if __name__ == '__main__':
-    # запуск бота (dp - аргумент через что стартовать)
-    executor.start_polling(dp, skip_updates=True)
