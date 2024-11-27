@@ -79,6 +79,7 @@ async def set_calories(message, state):
     await state.update_data(man_=message.text)
     # сохранение полученных данных в переменной data
     data = await state.get_data()
+    # условие анализа пола пользователя
     if str(data['man_']) == 'м':
         # Расчет по формуле Миффлина-Сан Жеора для мужчин
         calories = int(data['weight_']) * 10 + int(data['growth_']) * 6.25 - int(data['age_']) + 5
