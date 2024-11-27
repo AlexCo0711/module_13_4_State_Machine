@@ -18,7 +18,7 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 
 # объявление класса состояния UserState наследованный от StatesGroup
 class UserState(StatesGroup):
-    # объявление объектов класса age, growth, weight, man (возраст, рост, вес, пол)
+    # объявление объектов класса age, growth, weight (возраст, рост, вес)
     age = State()
     growth = State()
     weight = State()
@@ -30,7 +30,7 @@ class UserState(StatesGroup):
 # функция получения возраста пользователя
 async def set_age(message):
     # ожидание сообщения Calories и вывод текста
-    await message.answer('Ваш возраст?')
+    await message.answer('Ваш возраст (полных лет):')
     # ожидание ввода возраста
     await UserState.age.set()
 
@@ -42,7 +42,7 @@ async def set_growth(message, state):
     # ожидание сохранение сообщения возраста от пользователя в базе данных состояния
     await state.update_data(age_=message.text)
     # ожидание вывода текста
-    await message.answer('Введите свой рост:')
+    await message.answer('Введите свой рост (см):')
     # ожидание ввода роста
     await UserState.growth.set()
 
@@ -54,14 +54,14 @@ async def set_weight(message, state):
     # ожидание сохранение сообщения роста от пользователя в базе данных состояния
     await state.update_data(growth_=message.text)
     # ожидание вывода текста
-    await message.answer('Введите свой вес:')
+    await message.answer('Введите свой вес (кг):')
     # ожидание ввода веса
     await UserState.weight.set()
 
 
 # обработчик ожидания окончания статуса UserState.weight
 @dp.message_handler(state=UserState.weight)
-# функция расчета суточного рациона пользователя в калориях
+# функция получения пола пользователя
 async def set_weight(message, state):
     # ожидание сохранение сообщения веса от пользователя в базе данных состояния
     await state.update_data(weight_=message.text)
@@ -71,19 +71,20 @@ async def set_weight(message, state):
     await UserState.man.set()
 
 
-# обработчик ожидания окончания статуса UserState.man
+# обработчик ожидания окончания статуса UserState.weight
 @dp.message_handler(state=UserState.man)
-async def set_man(message, state):
+# функция расчета суточного рациона пользователя в калориях
+async def set_calories(message, state):
     # ожидание сохранение сообщения веса от пользователя в базе данных состояния
     await state.update_data(man_=message.text)
     # сохранение полученных данных в переменной data
     data = await state.get_data()
-    if (data['man_']) == 'м':
+    if str(data['man_']) == 'м':
         # Расчет по формуле Миффлина-Сан Жеора для мужчин
         calories = int(data['weight_']) * 10 + int(data['growth_']) * 6.25 - int(data['age_']) + 5
         # ожидание вывода текста результатов расчета
         await message.answer(f'Ваша норма калорий {calories} день')
-    elif (data['man_']) == 'ж':
+    elif str(data['man_']) == 'ж':
         # Расчет по формуле Миффлина-Сан Жеора для женщин
         calories = int(data['weight_']) * 10 + int(data['growth_']) * 6.25 - int(data['age_']) - 161
         # ожидание вывода текста результатов расчета
