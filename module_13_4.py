@@ -75,11 +75,15 @@ async def set_man(message, state):
     if (data['man_']) == 'м':
         # Расчет по формуле Миффлина-Сан Жеора для мужчин
         calories = int(data['weight_'])*10 + int(data['growth_']) * 6.25 - int(data['age_']) + 5
+        # ожидание вывода текста результатов расчета
+        await message.answer(f'Ваша норма калорий {calories} день')
     elif (data['man_']) == 'ж':
         # Расчет по формуле Миффлина-Сан Жеора для женщин
         calories = int(data['weight_']) * 10 + int(data['growth_']) * 6.25 - int(data['age_']) - 161
-    # ожидание вывода текста результатов расчета
-    await message.answer(f'Ваша норма калорий {calories} день')
+        # ожидание вывода текста результатов расчета
+        await message.answer(f'Ваша норма калорий {calories} день')
+    else:
+        await message.answer(f'Введены неверные данные, начните ввод с начала')
     # завершение работы машины состояния
     await state.finish()
 
@@ -88,6 +92,11 @@ async def set_man(message, state):
 async def start(message):
     await message.answer('Привет! Я бот помогающий твоему здоровью.\n'
                          'Введите слово "Calories"')
+
+
+if __name__ == '__main__':
+    # запуск бота (dp - аргумент через что стартовать)
+    executor.start_polling(dp, skip_updates=True)
 
 
 if __name__ == '__main__':
