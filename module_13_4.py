@@ -82,12 +82,12 @@ async def set_calories(message, state):
     # условие анализа пола пользователя
     if str(data['man_']) == 'м':
         # Расчет по формуле Миффлина-Сан Жеора для мужчин
-        calories = int(data['weight_']) * 10 + int(data['growth_']) * 6.25 - int(data['age_']) + 5
+        calories = int(data['weight_']) * 10 + int(data['growth_']) * 6.25 - int(data['age_']) * 5 + 5
         # ожидание вывода текста результатов расчета
         await message.answer(f'Ваша норма калорий {calories} день')
     elif str(data['man_']) == 'ж':
         # Расчет по формуле Миффлина-Сан Жеора для женщин
-        calories = int(data['weight_']) * 10 + int(data['growth_']) * 6.25 - int(data['age_']) - 161
+        calories = int(data['weight_']) * 10 + int(data['growth_']) * 6.25 - int(data['age_']) * 5 - 161
         # ожидание вывода текста результатов расчета
         await message.answer(f'Ваша норма калорий {calories} день')
     else:
